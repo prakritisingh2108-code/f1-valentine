@@ -6,6 +6,71 @@
 <title>Will You Be My Valentine?</title>
 
 <style>
+
+    #lights {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    }
+
+    #lights span {
+    width: 20px;
+    height: 20px;
+    background: #300;
+    border-radius: 50%;
+    animation: lights 5s infinite;
+    }
+
+    #lights span:nth-child(1){animation-delay:0s}
+    #lights span:nth-child(2){animation-delay:1s}
+    #lights span:nth-child(3){animation-delay:2s}
+    #lights span:nth-child(4){animation-delay:3s}
+    #lights span:nth-child(5){animation-delay:4s}
+
+    @keyframes lights {
+        0% { background: #300; }
+        20% { background: red; }
+        100% { background: red; }
+    }
+
+    #lapBanner {
+    position: fixed;
+    top: 40%;
+    left: -100%;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ff1e1e;
+    background: black;
+    padding: 20px 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(255,30,30,0.7);
+    z-index: 999;
+    animation: none;
+    }
+
+    .lap-animate {
+        animation: lapFinish 3s ease-in-out forwards;
+    }
+    
+    @keyframes lapFinish {
+        0% {
+            left: -100%;
+            transform: scale(1);
+        }
+        40% {
+            left: 50%;
+            transform: translateX(-50%) scale(1.2);
+        }
+        70% {
+            transform: translateX(-50%) scale(1.3);
+        }
+        100% {
+            left: 110%;
+            transform: scale(1);
+        }
+    }
+
     body {
         margin: 0;
         font-family: 'Arial', sans-serif;
@@ -108,12 +173,18 @@
 
 <body>
 
-<h1🏎️>Will You Be My Valentine?</h1>
+<h1>🏎️ Will You Be My Valentine?</h1>
 <p>Choose wisely… F1 authorities are watching 👀</p>
+
+<div id="lights">
+    <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<audio id="engine" src="engine.mp3"></audio>
 
 <div class="track">
     <button class="car-btn yes" onclick="yesClicked()">🏎️ YES</button>
-    <button class="car-btn no" onclick="noClicked()">🏎️ NO</button>
+    <button class="car-btn no" onmouseover="runAway(this)" onclick="noClicked()">🏎️ NO</button>
 </div>
 
 <!-- YES POPUP -->
@@ -135,10 +206,28 @@
         <button onclick="closePopup('noPopup')">I CHANGE MY ANSWER</button>
     </div>
 </div>
+    
+<div id="lapBanner">🏁 LAP COMPLETED ❤️</div>
 
 <script>
     function yesClicked() {
-        document.getElementById('yesPopup').style.display = 'flex';
+    // Engine sound (if present)
+    const engine = document.getElementById('engine');
+    if (engine) engine.play();
+
+    // Show Max popup
+    document.getElementById('yesPopup').style.display = 'flex';
+
+    // Lap completed animation
+    const banner = document.getElementById('lapBanner');
+    banner.classList.remove('lap-animate'); // reset
+    void banner.offsetWidth; // force reflow
+    banner.classList.add('lap-animate');
+    }
+
+    function runAway(btn) {
+        btn.style.top = Math.random() * 60 + "%";
+        btn.style.left = Math.random() * 80 + "%";
     }
 
     function noClicked() {
@@ -152,3 +241,4 @@
 
 </body>
 </html>
+
