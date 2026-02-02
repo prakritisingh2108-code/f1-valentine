@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Will You Be My Valentine?</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(120deg, #0a0a0a, #1a1a1a);
+        color: white;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    h1 {
+        margin-top: 60px;
+        font-size: 3rem;
+        color: #ff1e1e;
+    }
+
+    p {
+        font-size: 1.3rem;
+        margin-bottom: 40px;
+    }
+
+    .track {
+        position: relative;
+        width: 100%;
+        height: 150px;
+        margin-top: 40px;
+    }
+
+    .car-btn {
+        position: absolute;
+        width: 140px;
+        height: 60px;
+        border-radius: 30px;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1rem;
+        animation: drive 4s linear infinite;
+    }
+
+    .yes {
+        background: #1eff5a;
+        left: -150px;
+        top: 30px;
+        animation-delay: 0s;
+    }
+
+    .no {
+        background: #ff4040;
+        left: -150px;
+        top: 90px;
+        animation-delay: 2s;
+    }
+
+    @keyframes drive {
+        from { left: -150px; }
+        to { left: 110%; }
+    }
+
+    /* Popup */
+    .popup {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.8);
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .popup-content {
+        background: #111;
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 400px;
+        animation: pop 0.5s ease;
+    }
+
+    @keyframes pop {
+        from { transform: scale(0.6); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    .popup img {
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    .popup button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        background: #ff1e1e;
+        color: white;
+        font-size: 1rem;
+    }
+</style>
+</head>
+
+<body>
+
+<h1🏎️>Will You Be My Valentine?</h1>
+<p>Choose wisely… F1 authorities are watching 👀</p>
+
+<div class="track">
+    <button class="car-btn yes" onclick="yesClicked()">🏎️ YES</button>
+    <button class="car-btn no" onclick="noClicked()">🏎️ NO</button>
+</div>
+
+<!-- YES POPUP -->
+<div class="popup" id="yesPopup">
+    <div class="popup-content">
+        <img src="max.png" alt="Approval"/>
+        <h2>Max Verstappen approves of this Valentine choice 🏆❤️</h2>
+        <p>Championship-level decision.</p>
+        <button onclick="closePopup('yesPopup')">VROOM 🏁</button>
+    </div>
+</div>
+
+<!-- NO POPUP -->
+<div class="popup" id="noPopup">
+    <div class="popup-content">
+        <img src="lando.png" alt="Judgement"/>
+        <h2>You are clearly a Lando Norris fan 😤</h2>
+        <p>Go back and reconsider your life choices.</p>
+        <button onclick="closePopup('noPopup')">I CHANGE MY ANSWER</button>
+    </div>
+</div>
+
+<script>
+    function yesClicked() {
+        document.getElementById('yesPopup').style.display = 'flex';
+    }
+
+    function noClicked() {
+        document.getElementById('noPopup').style.display = 'flex';
+    }
+
+    function closePopup(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
