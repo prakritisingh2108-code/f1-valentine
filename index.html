@@ -1,135 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Valentine Grand Prix</title>
 
 <style>
-/* RESET */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     height: 100vh;
-    background: radial-gradient(circle at center, #1a0000, #000);
+    background: radial-gradient(circle at top, #120000, #000);
+    font-family: Arial Black, Arial, sans-serif;
     color: white;
-    font-family: 'Arial Black', Arial, sans-serif;
     overflow: hidden;
     text-align: center;
 }
 
-/* TOP CHAOS BANNER */
+/* TOP BANNER */
 .hero {
     width: 100%;
-    padding: 20px;
-    font-size: 2.8rem;
+    padding: 18px;
+    font-size: 2.3rem;
     background: repeating-linear-gradient(
-        45deg,
-        black,
-        black 20px,
-        red 20px,
-        red 40px
+        45deg, black, black 20px, red 20px, red 40px
     );
-    animation: bannerMove 8s linear infinite;
+    animation: bannerMove 10s linear infinite;
 }
 
 @keyframes bannerMove {
     from { background-position: 0 0; }
-    to { background-position: 800px 0; }
+    to { background-position: 1000px 0; }
 }
 
-/* HEADLINE */
 h1 {
-    margin-top: 30px;
-    font-size: 3rem;
-    color: #ff1e1e;
+    margin-top: 25px;
+    font-size: 2.6rem;
+    color: #ff2a2a;
     text-shadow: 0 0 15px red;
 }
 
 .subtitle {
     margin-top: 10px;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     opacity: 0.9;
 }
 
-/* TRACK */
+/* CARS */
 .track {
-    position: relative;
-    width: 100vw;
-    height: 45vh;
-    margin-top: 40px;
-    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    gap: 120px;
+    margin-top: 70px;
 }
 
-/* CAR BUTTONS */
-.car {
-    position: absolute;
-    width: 240px;
+.car-wrapper {
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform 0.25s ease;
 }
 
-.car:hover {
-    transform: scale(1.15) rotate(-2deg);
+.car {
+    width: 180px;
 }
 
-.yes-car {
-    top: 25%;
-    left: -260px;
-    animation: yesDrive 5s linear infinite;
+.yes-car { filter: hue-rotate(200deg) saturate(1.4); }
+.no-car  { filter: hue-rotate(35deg) saturate(1.6); }
+
+/* NO CAR ESCAPE */
+.no-wrapper {
+    transition: transform 0.25s ease;
 }
 
-.no-car {
-    top: 55%;
-    left: -260px;
-    filter: hue-rotate(180deg);
-    animation: noDrive 5s linear infinite;
-}
-
-@keyframes yesDrive {
-    from { left: -260px; }
-    to { left: 110%; }
-}
-
-@keyframes noDrive {
-    from { left: -260px; }
-    to { left: 110%; }
-}
-
-/* LAP COMPLETED BANNER */
-#lapBanner {
+/* OVERLAY */
+.overlay {
     position: fixed;
-    top: 40%;
-    left: -100%;
-    font-size: 3.2rem;
-    background: black;
-    padding: 25px 45px;
-    border-radius: 20px;
-    color: #ff1e1e;
-    box-shadow: 0 0 40px red;
-    z-index: 999;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    z-index: 900;
 }
 
-.lap-animate {
-    animation: lapFinish 3s ease-in-out forwards;
+/* PODIUM */
+.podium {
+    position: fixed;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%) translateY(40px);
+    width: 300px;
+    height: 100px;
+    background: linear-gradient(#333, #111);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 0 40px gold;
+    opacity: 0;
+    display: none;
+    z-index: 950;
 }
 
-@keyframes lapFinish {
-    0% { left: -100%; }
-    40% { left: 50%; transform: translateX(-50%) scale(1.2); }
-    70% { transform: translateX(-50%) scale(1.35); }
-    100% { left: 120%; }
+.podium.show {
+    animation: podiumUp 0.9s ease-out forwards;
+}
+
+@keyframes podiumUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.podium::before {
+    content: "P1 🏆";
+    position: absolute;
+    top: -44px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: gold;
+}
+
+.engraving {
+    position: absolute;
+    bottom: 18px;
+    width: 100%;
+    font-size: 1.2rem;
+    color: gold;
+    text-shadow: 0 0 8px rgba(255,215,0,0.8);
+}
+
+/* CONFETTI */
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 14px;
+    background: gold;
+    animation: fall 1.4s linear forwards;
+    z-index: 940;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(220px) rotate(360deg); opacity: 0; }
+}
+
+/* CHAMPAGNE */
+.champagne {
+    position: fixed;
+    bottom: 230px;
+    font-size: 2.4rem;
+    display: none;
+    z-index: 960;
+}
+
+.champagne.left  { left: 35%; animation: spray 0.8s infinite alternate; }
+.champagne.right { right: 35%; animation: spray 0.8s infinite alternate; }
+
+@keyframes spray {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-20px); }
 }
 
 /* POPUPS */
 .popup {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.9);
     display: none;
     align-items: center;
     justify-content: center;
@@ -138,60 +174,49 @@ h1 {
 
 .popup-content {
     background: #111;
-    padding: 30px;
+    padding: 26px;
     border-radius: 20px;
     max-width: 420px;
-    animation: pop 0.5s ease;
+    animation: pop 0.4s ease;
 }
 
 @keyframes pop {
-    from { transform: scale(0.6); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from { transform: scale(0.7); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
 }
 
 .popup img {
     width: 100%;
     border-radius: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 14px;
 }
 
 .popup button {
-    margin-top: 20px;
-    padding: 12px 25px;
-    border-radius: 25px;
+    margin-top: 16px;
+    padding: 10px 22px;
+    border-radius: 22px;
     border: none;
-    font-size: 1.1rem;
+    font-size: 1rem;
     background: red;
     color: white;
     cursor: pointer;
 }
 
-/* BOTTOM PROPAGANDA */
+/* BOTTOM BANNER */
 .bottom-banner {
     position: fixed;
     bottom: 0;
     width: 100%;
-    padding: 15px;
+    padding: 12px;
     background: black;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     white-space: nowrap;
     animation: scrollText 10s linear infinite;
 }
 
 @keyframes scrollText {
     from { transform: translateX(100%); }
-    to { transform: translateX(-100%); }
-}
-
-/* CHAOS MODE */
-.chaos {
-    animation: chaosFlash 0.3s infinite;
-}
-
-@keyframes chaosFlash {
-    0% { background-color: #000; }
-    50% { background-color: #2a0000; }
-    100% { background-color: #000; }
+    to   { transform: translateX(-100%); }
 }
 </style>
 </head>
@@ -200,66 +225,135 @@ h1 {
 
 <div class="hero">🏁 OFFICIAL VALENTINE GRAND PRIX 🏁</div>
 
-<h1>🏎️ Will You Be My Valentine?</h1>
-<div class="subtitle">Championship on the line. Choose wisely.</div>
+<h1>🏎️ Will You Be My Valentine?🏎️</h1>
+<div class="subtitle">Choose wisely. History will remember this.</div>
 
 <audio id="engine" src="engine.mp3"></audio>
 
 <div class="track">
-    <img src="car.png" class="car yes-car" onclick="yesClicked()">
-    <img src="car.png" class="car no-car" onmouseover="runAway(this)" onclick="noClicked()">
+    <div class="car-wrapper" onclick="yesClicked()">
+        <img src="car.png" class="car yes-car">
+        <div>YES</div>
+    </div>
+
+    <div class="car-wrapper no-wrapper" onclick="noClicked()">
+        <img src="car.png" class="car no-car">
+        <div>NO</div>
+    </div>
 </div>
 
-<div id="lapBanner">🏁 LAP COMPLETED ❤️</div>
+<div class="overlay" id="overlay"></div>
 
+<div class="podium" id="podium">
+    <div class="engraving">🏆 Kitts ❤️ Sam 🏆</div>
+</div>
+
+<div class="champagne left" id="champagneLeft">🍾🍾</div>
+<div class="champagne right" id="champagneRight">🍾🍾</div>
+
+<!-- YES POPUP -->
 <div class="popup" id="yesPopup">
     <div class="popup-content">
         <img src="max.png">
         <h2>Max Verstappen approves 🏆❤️</h2>
-        <p>P1. No further questions.</p>
-        <button onclick="closePopup('yesPopup')">VROOM 🏁</button>
+        <p>P1 decision confirmed.</p>
+        <button onclick="startCelebration()">CHAMPAGNE 🍾</button>
     </div>
 </div>
 
+<!-- NO POPUP -->
 <div class="popup" id="noPopup">
     <div class="popup-content">
         <img src="lando.png">
         <h2>You are a Lando Norris fan 😤</h2>
-        <p>This choice is under investigation.</p>
-        <button onclick="closePopup('noPopup')">I REGRET EVERYTHING</button>
+        <p>This will be remembered.</p>
+        <button onclick="closeAll()">I REGRET THIS</button>
     </div>
 </div>
 
 <div class="bottom-banner">
-    ❤️ FIA APPROVED • CHAMPIONSHIP DECIDING MOMENT • SAY YES • 🏁
+❤️ FIA APPROVED • PODIUM FINISH GUARANTEED • MAKE THE RIGHT CALL • 🏁
 </div>
 
 <script>
-function yesClicked() {
-    document.body.classList.add("chaos");
+/* NO CAR SOFT ESCAPE */
+const noWrapper = document.querySelector(".no-wrapper");
 
+noWrapper.addEventListener("mouseenter", () => {
+    const x = (Math.random() * 50) - 25;
+    const y = (Math.random() * 30) - 15;
+    noWrapper.style.transform = `translate(${x}px, ${y}px)`;
+});
+
+noWrapper.addEventListener("mouseleave", () => {
+    noWrapper.style.transform = "translate(0,0)";
+});
+
+noWrapper.addEventListener("mousedown", () => {
+    noWrapper.style.transform = "translate(0,0)";
+});
+
+/* YES CLICK: ONLY MAX FIRST */
+function yesClicked() {
     const engine = document.getElementById("engine");
-    if (engine) engine.play();
+    document.getElementById("overlay").style.display = "block";
+
+    if (engine) {
+        engine.currentTime = 0;
+        engine.play();
+    }
 
     document.getElementById("yesPopup").style.display = "flex";
+}
 
-    const banner = document.getElementById("lapBanner");
-    banner.classList.remove("lap-animate");
-    void banner.offsetWidth;
-    banner.classList.add("lap-animate");
+/* CHAMPAGNE BUTTON → FULL CELEBRATION */
+function startCelebration() {
+    document.getElementById("yesPopup").style.display = "none";
+
+    const podium = document.getElementById("podium");
+    podium.style.display = "block";
+    podium.classList.add("show");
+
+    document.getElementById("champagneLeft").style.display = "block";
+    document.getElementById("champagneRight").style.display = "block";
+
+    launchConfetti();
+}
+
+/* GOLD CONFETTI ABOVE PODIUM */
+function launchConfetti() {
+    const podiumTop = window.innerHeight * 0.45;
+
+    for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+            const c = document.createElement("div");
+            c.className = "confetti";
+            c.style.left = 42 + Math.random() * 16 + "vw";
+            c.style.top = podiumTop + "px";
+            document.body.appendChild(c);
+
+            setTimeout(() => c.remove(), 1400);
+        }, i * 50);
+    }
 }
 
 function noClicked() {
+    document.getElementById("overlay").style.display = "block";
     document.getElementById("noPopup").style.display = "flex";
 }
 
-function runAway(btn) {
-    btn.style.left = Math.random() * 80 + "%";
-    btn.style.top = Math.random() * 70 + "%";
-}
+function closeAll() {
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("podium").style.display = "none";
+    document.getElementById("podium").classList.remove("show");
 
-function closePopup(id) {
-    document.getElementById(id).style.display = "none";
+    document.getElementById("champagneLeft").style.display = "none";
+    document.getElementById("champagneRight").style.display = "none";
+
+    document.getElementById("yesPopup").style.display = "none";
+    document.getElementById("noPopup").style.display = "none";
+
+    document.querySelectorAll(".confetti").forEach(c => c.remove());
 }
 </script>
 
